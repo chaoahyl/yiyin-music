@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="依音播放器" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#121212" />
+
+    <meta name="full-screen" content="yes" />
+    <meta name="browsermode" content="application" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>依音本地播放器-云端遥控</title>
+    <link rel="icon" href="./icon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="./icon.ico" type="image/x-icon" />
+    <script src="./js/socket.io.min.js"></script>
+    <link rel="stylesheet" href="./css/all.min.css" />
+    <link rel="stylesheet" href="./css/phone.css" />
+  </head>
+  <body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <i id="themeIcon" class="fa-solid fa-moon"></i>
+    </div>
+
+    <div class="container" id="playerApp">
+      <div id="coverBg"></div>
+      <div class="info">
+        <div class="album-art">
+          <img id="coverImg" src="" style="display: none" />
+          <span id="coverFallback"><i class="fa-solid fa-music"></i></span>
+        </div>
+
+        <div class="text-content">
+          <h2 id="curTitle">准备就绪</h2>
+          <p id="curArtist">点击播放端开始享受音乐</p>
+
+          <div class="progress-container">
+            <div class="progress-bar" id="progressClickArea">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div class="time-info">
+              <span id="currentTime">00:00</span>
+              <span id="totalTime">00:00</span>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="btn-control" onclick="handleModeClick('random')" id="modeRandom">
+              <i class="fa-solid fa-shuffle"></i>
+            </button>
+
+            <button class="btn-control" onclick="sendCmd('prev')">
+              <i class="fa-solid fa-backward-step"></i>
+            </button>
+
+            <button class="btn-control" id="playBtn" onclick="sendCmd('toggle')">
+              <i id="svg-play" class="fa-solid fa-play"></i>
+              <i id="svg-pause" class="fa-solid fa-pause" style="display: none"></i>
+            </button>
+
+            <button class="btn-control" onclick="sendCmd('next')">
+              <i class="fa-solid fa-forward-step"></i>
+            </button>
+
+            <button class="btn-control" onclick="handleModeClick('loop')" id="modeLoop">
+              <i class="fa-solid fa-repeat"></i>
+            </button>
+          </div>
+
+          <div class="volume-container">
+            <i class="fa-solid fa-volume-low" onclick="quickSetVolume(0)"></i>
+            <div class="volume-bar" id="volumeClickArea">
+              <div id="volumeFill" class="volume-fill"></div>
+            </div>
+            <i class="fa-solid fa-volume-high" onclick="quickSetVolume(1)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/phone.js"></script>
+  </body>
+</html>

@@ -1,0 +1,279 @@
+:root {
+  /* 明亮模式 - 增加半透明底色以支持毛玻璃 */
+  --primary-color: #00a2ff;
+  --bg-color: #f0f2f5;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --text-main: #2d3436;
+  --text-sub: #636e72;
+  --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  --btn-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --bar-fill: #2d3436;
+  --bar-bg: rgba(0, 0, 0, 0.08);
+  --control-active-bg: rgba(0, 0, 0, 0.1);
+
+  --icon-main: 1.8rem;
+  --icon-side: 1.1rem;
+  --btn-side-size: 20px;
+}
+
+/* 暗黑模式 */
+[data-theme='dark'] {
+  --bg-color: #0f1111;
+  --glass-bg: rgba(30, 30, 30, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f5f5f7;
+  --text-sub: #a1a1a6;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --bar-fill: #ffffff;
+  --bar-bg: rgba(255, 255, 255, 0.15);
+  --control-active-bg: rgba(255, 255, 255, 0.15);
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'PingFang SC', 'SF Pro Display', sans-serif;
+  overflow: hidden;
+  transition: background-color 0.4s ease;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(0, 162, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 0, 128, 0.05) 0%, transparent 40%);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 5%;
+}
+
+/* 核心毛玻璃容器 */
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 30px;
+  border-radius: 30px;
+  /* 毛玻璃属性 */
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  gap: 30px;
+  transition: all 0.3s ease;
+}
+
+.album-art {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 切歌与播放动效 */
+.album-switching {
+  transform: scale(0.9);
+  opacity: 0.5;
+}
+
+.is-playing .album-art {
+  transform: scale(1.02);
+  box-shadow: 0 15px 45px rgba(0, 162, 255, 0.2);
+}
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.text-content h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.text-content p {
+  color: var(--text-sub);
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+/* 进度条与音量条 */
+.progress-container,
+.volume-container {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+.progress-container {
+  flex-direction: column;
+}
+.volume-container {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.progress-bar,
+.volume-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bar-bg);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill,
+.volume-fill {
+  width: 0%;
+  height: 100%;
+  background-color: var(--bar-fill);
+  border-radius: 10px;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(0, 162, 255, 0.5); /* 增加发光 */
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-sub);
+  font-family: 'SF Mono', 'Monaco', monospace;
+}
+
+/* 控制按钮 */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.btn-control {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  width: var(--btn-side-size);
+  height: var(--btn-side-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--icon-side);
+  border-radius: 5px;
+  padding: 15px;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-control.active {
+  background: var(--control-active-bg);
+}
+/* 移入放大效果 */
+.btn-control:hover {
+  transform: scale(1.2);
+}
+
+/* 按下缩小效果 (Active 状态) */
+.btn-control:active {
+  transform: scale(0.9);
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* 横屏适配优化 */
+@media (orientation: landscape) and (min-height: 400px) {
+  .info {
+    max-width: 80%;
+    flex-direction: row;
+    padding: 30px;
+  }
+  .album-art {
+    width: 40%;
+  }
+  .text-content {
+    width: 60%;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+/* 封面流体背景 */
+#coverBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(60px);
+  transform: scale(1.3);
+  z-index: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    background-image 0.5s ease,
+    filter 0.4s ease;
+  will-change: opacity;
+}
+
+.info {
+  position: relative;
+  z-index: 1;
+}
+#coverBg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+[data-theme='dark'] #coverBg::after {
+  background: rgba(0, 0, 0, 0.5);
+}

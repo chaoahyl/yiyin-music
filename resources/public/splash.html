@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      :root {
+        --brand-main: #4facfe;
+        --brand-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --bg-color: #fcfdfe; /* 稍微提升亮度，更纯净 */
+        --glass-border: rgba(255, 255, 255, 0.8);
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        background-color: var(--bg-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family:
+          'SF Pro Display',
+          'PingFang SC',
+          -apple-system,
+          sans-serif;
+      }
+
+      /* 增强背景动态光效 */
+      .ambient-light {
+        position: absolute;
+        width: 80vw;
+        height: 80vw;
+        background: radial-gradient(circle, rgba(79, 172, 254, 0.12) 0%, rgba(0, 242, 254, 0) 60%);
+        z-index: 0;
+        animation: pulse 10s infinite alternate ease-in-out;
+      }
+
+      /* 主卡片容器 */
+      .main-card {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 70px 110px; /* 增加留白感 */
+        border-radius: 64px; /* 超椭圆视觉 */
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(40px) saturate(200%); /* 加深模糊度，更显高级 */
+        -webkit-backdrop-filter: blur(40px) saturate(200%);
+        border: 1px solid var(--glass-border);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.02),
+          0 50px 100px rgba(79, 172, 254, 0.05); /* 阴影带有一丝品牌色 */
+      }
+
+      .logo-wrapper {
+        position: relative;
+        width: 130px;
+        height: 130px;
+        margin-bottom: 35px;
+      }
+
+      .logo-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: relative;
+        z-index: 5;
+        animation: iconFloat 4s ease-in-out infinite;
+      }
+
+      /* 灵动的呼吸声波 */
+      .circle-wave {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 1.2px solid var(--brand-main);
+        opacity: 0;
+        animation: softRipple 5s cubic-bezier(0.2, 0, 0.2, 1) infinite;
+      }
+      .circle-wave:nth-child(2) {
+        animation-delay: 1.5s;
+      }
+
+      .brand-title {
+        font-size: 38px;
+        font-weight: 800;
+        letter-spacing: 10px; /* 进一步拉大字间距 */
+        margin: 0;
+        padding-left: 10px; /* 抵消末字间距，使视觉居中 */
+        background: var(--brand-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .brand-slogan {
+        margin-top: 18px;
+        font-size: 16px;
+        color: #7f8fa4;
+        letter-spacing: 5px;
+        font-weight: 400;
+        opacity: 0.9;
+      }
+
+      /* 动画定义 */
+      @keyframes iconFloat {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-15px) scale(1.02);
+        }
+      }
+
+      @keyframes softRipple {
+        0% {
+          width: 110px;
+          height: 110px;
+          opacity: 0.5;
+        }
+        100% {
+          width: 400px;
+          height: 400px;
+          opacity: 0;
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: translate(-10%, -10%) scale(1);
+        }
+        100% {
+          transform: translate(10%, 10%) scale(1.15);
+        }
+      }
+
+      /* 丝滑入场 */
+      .reveal {
+        animation: revealIn 1.4s cubic-bezier(0.15, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes revealIn {
+        from {
+          opacity: 0;
+          transform: scale(0.92) translateY(30px);
+          filter: blur(15px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          filter: blur(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="ambient-light"></div>
+
+    <div class="main-card reveal">
+      <div class="logo-wrapper">
+        <div class="circle-wave"></div>
+
+        <div class="circle-wave"></div>
+        <img src="./splash.png" alt="依音" class="logo-img" />
+      </div>
+
+      <h1 class="brand-title">依音</h1>
+
+      <p class="brand-slogan">遇见本地的好音乐</p>
+    </div>
+
+    <script>
+      // 保持界面稳定
+      window.addEventListener('load', () => {
+        console.log('依音启动就绪')
+      })
+    </script>
+  </body>
+</html>
