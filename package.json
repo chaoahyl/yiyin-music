@@ -4,7 +4,7 @@
   "description": "依音-专注本地音乐播放",
   "main": "./out/main/index.js",
   "author": "chaoahyl",
-  "homepage": "https://electron-vite.org",
+  "homepage": "https://yiyinmusic.chaoahyl.com",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",

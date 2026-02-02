@@ -11,6 +11,27 @@
 
 ---
 
+## 📸 应用截图
+
+<p align="center">
+  <b>依音播放器</b><br><br>
+  <img src="./resources/home.png" width="600">
+  <br><br>
+  <img src="./resources/lyc.png" width="600">
+</p>
+
+<p align="center">
+  <b>远程控制 · 明亮模式</b><br><br>
+  <img src="./resources/control_light.png" width="600">
+</p>
+
+<p align="center">
+  <b>远程控制 · 深色模式</b><br><br>
+  <img src="./resources/control_dark.png" width="600">
+</p>
+
+---
+
 ## 产品理念
 
 - 专注本地音乐，不接入在线音乐平台

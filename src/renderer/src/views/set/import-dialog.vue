@@ -99,21 +99,26 @@ const dashOffset = computed(() => {
 </script>
 
 <style scoped lang="less">
-/* 毛玻璃 Dialog 深度样式重写 */
 :deep(.el-dialog.premium-glass-dialog) {
-  background: rgba(25, 25, 25, 0.6) !important;
-  backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  background: var(--color-bg) !important;
+  backdrop-filter: blur(15px) saturate(160%);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--box-shadow-hover);
   overflow: hidden;
+
+  /* 适配 filter-mode 的特殊处理 */
+  html.filter-mode & {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
 
   .el-dialog__header {
     margin: 0;
     padding-top: 25px;
     text-align: center;
     .el-dialog__title {
-      color: rgba(255, 255, 255, 0.9);
+      color: var(--color-text);
       font-size: 16px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -133,16 +138,17 @@ const dashOffset = computed(() => {
     height: 200px;
     margin-bottom: 20px;
 
-    /* 背景光晕 */
+    /* 背景光晕：使用全局主色调渐变 */
     .ambient-glow {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, transparent 70%);
-      filter: blur(20px);
+      width: 140px;
+      height: 140px;
+      background: var(--main-gradient);
+      filter: blur(40px);
+      opacity: 0.15;
       z-index: 0;
     }
 
@@ -150,6 +156,7 @@ const dashOffset = computed(() => {
       transform: rotate(-90deg);
       width: 100%;
       height: 100%;
+      position: relative;
       z-index: 1;
 
       circle {
@@ -159,20 +166,21 @@ const dashOffset = computed(() => {
       }
 
       .track {
-        stroke: rgba(255, 255, 255, 0.03);
+        /* 使用边框色作为轨道背景 */
+        stroke: var(--color-border);
+        opacity: 0.5;
       }
 
       .bar {
         stroke-dasharray: 276.46;
-        /* 关键：0.3s 的平滑过渡，不会感觉太肉，也不会感觉太突兀 */
         transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        filter: drop-shadow(0 0 5px rgba(52, 211, 153, 0.3));
+        /* 移除硬编码颜色，改用 SVG 定义的渐变（引用 template 里的 linearGradient） */
       }
     }
 
     .percentage {
       position: absolute;
-      top: 55%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
@@ -181,14 +189,14 @@ const dashOffset = computed(() => {
         font-size: 48px;
         font-weight: 800;
         font-family: 'DIN Condensed', 'Arial Black', sans-serif;
-        color: #fff;
+        color: var(--color-text);
         line-height: 1;
       }
       .unit {
         font-size: 14px;
-        color: rgba(255, 255, 255, 0.4);
+        color: var(--color-text);
+        opacity: 0.5;
         margin-left: 2px;
-        text-transform: uppercase;
       }
     }
   }
@@ -203,20 +211,21 @@ const dashOffset = computed(() => {
       gap: 10px;
       margin-bottom: 20px;
       padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
+      background: var(--color-bg-hover);
+      border-radius: var(--border-radius-base);
 
       .pulsing-dot {
         width: 6px;
         height: 6px;
-        background: #34d399;
+        background: #34d399; /* 保持进度绿色作为状态点 */
         border-radius: 50%;
         animation: pulse 1.5s infinite;
       }
 
       .file-name {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.7);
+        color: var(--color-text);
+        opacity: 0.8;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -239,19 +248,20 @@ const dashOffset = computed(() => {
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 1px;
-          color: rgba(255, 255, 255, 0.3);
+          color: var(--color-text);
+          opacity: 0.4;
         }
         .val {
           font-size: 16px;
           font-weight: 600;
-          color: rgba(255, 255, 255, 0.9);
+          color: var(--color-text);
         }
       }
 
       .stat-divider {
         width: 1px;
         height: 20px;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--color-border);
       }
     }
   }
