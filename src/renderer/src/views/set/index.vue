@@ -144,7 +144,11 @@ const buttonList = computed(() => ({
 const handleOpenLogs = () => window.api.openPath()
 
 /** 表单数据 */
-const formData = ref({ mode: uiStore.themeMode, audioMode: 'stereo', lang: uiStore.lang })
+const formData = ref({
+  mode: uiStore.themeMode,
+  audioMode: 'stereo',
+  lang: uiStore.lang
+})
 
 /** 表单分组 */
 const formGroups = computed(() => [
@@ -190,7 +194,9 @@ const qrVisible = ref(false)
 const remoteUrl = ref('')
 onMounted(() => {
   window.api.getCode().then((res) => {
-    if (handleRes(res)) remoteUrl.value = res.data
+    if (handleRes(res)) {
+      remoteUrl.value = res.data
+    }
   })
 })
 
@@ -213,12 +219,24 @@ const clearCache = () => {
     .catch(() => {})
 }
 
-/** 导入路径 */
+/** 导入进度状态 */
+const importProgress = reactive({
+  current: 0,
+  total: 0,
+  file: '',
+  percent: 10
+})
+
+const handleRemote = () => {
+  qrVisible.value = true
+}
+
+/** 设置路径 & 导入音乐 */
 const handlePath = () => {
   window.api.openMusicFolder().then((res) => {
     if (res.code === 200) {
       const p = res.path
-      window.api.setMusicFolder(p).then(() => {
+      window.api.setMusicFolder(p).then((_ress) => {
         uiStore.importVisible = true
         importProgress.current = 0
         importProgress.total = 0
@@ -231,7 +249,15 @@ const handlePath = () => {
           importProgress.percent = Math.round((data.current / data.total) * 100)
         })
 
-        window.api.importMusicFolder(p).finally(() => (uiStore.importVisible = false))
+        window.api
+          .importMusicFolder(p)
+          .then(() => {
+            localStorage.clear()
+            globalStore.resetAll()
+          })
+          .finally(() => {
+            uiStore.importVisible = false
+          })
       })
     } else {
       ElNotification({ title: res.message, type: 'info', position: 'bottom-right' })
@@ -239,6 +265,14 @@ const handlePath = () => {
   })
 }
 
+/** 模式切换 */
+const handleModeChange = (mode: 'dark' | 'filter' | 'light') => {
+  uiStore.themeMode = mode
+  setTheme(mode)
+  document.documentElement.classList.remove('dark', 'filter-mode')
+  if (mode === 'dark') document.documentElement.classList.add('dark')
+  else if (mode === 'filter') document.documentElement.classList.add('filter-mode')
+}
 /** 主题模式切换 */
 const modeOptions = computed(() => [
   { label: t('views.set.light_mode'), value: 'light' },
@@ -255,25 +289,19 @@ const langOptions = computed(() => [
 const activeIndex = computed(() =>
   modeOptions.value.findIndex((opt) => opt.value === formData.value.mode)
 )
+
 const updateMode = (val) => {
   formData.value.mode = val
-  setTheme(val)
-  document.documentElement.classList.remove('dark', 'filter-mode')
-  if (val === 'dark') document.documentElement.classList.add('dark')
-  else if (val === 'filter') document.documentElement.classList.add('filter-mode')
+  handleModeChange(val)
 }
-
 const langActiveIndex = computed(() =>
   langOptions.value.findIndex((opt) => opt.value === formData.value.lang)
 )
+
 const updateLang = (val: ELANG_VALUE) => {
   formData.value.lang = val
   setLang(val)
 }
-
-const handleRemote = () => (qrVisible.value = true)
-
-const importProgress = reactive({ current: 0, total: 0, file: '', percent: 0 })
 </script>
 
 <style scoped lang="less">
