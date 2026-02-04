@@ -42,6 +42,7 @@ import WindowsControl from '@renderer/layout/cpms/window-control/index.vue'
 
 import MusicPlayer from './cpms/music-player/index.vue'
 import PlayWindow from './cpms/play-window/index.vue'
+import { getLang, setLang } from '@renderer/lang'
 
 const globalStore = useGlobalStore()
 const uiStore = useUIStore()
@@ -51,6 +52,10 @@ const currentCover = ref(globalStore.playMusic?.cover)
 const bgStyle = computed(() => (currentCover.value ? `url(${currentCover.value})` : 'none'))
 
 let preloadImg: HTMLImageElement | null = null
+
+onMounted(() => {
+  setLang(getLang())
+})
 
 watch(
   () => [globalStore.playMusic?.cover, uiStore.themeMode],

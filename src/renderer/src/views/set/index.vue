@@ -30,6 +30,29 @@
           </div>
         </template>
 
+        <template #custom-lang>
+          <div class="custom-mode-switch">
+            <div
+              class="mode-slider"
+              :style="{
+                width: `calc(100% / ${langOptions.length} - 8px)`,
+                transform: `translateX(calc(${langActiveIndex} * 100% + ${langActiveIndex * 8}px))`
+              }"
+            >
+              <div class="slider-glow"></div>
+            </div>
+
+            <div
+              v-for="option in langOptions"
+              :key="option.value"
+              :class="['mode-item', { active: formData.lang === option.value }]"
+              @click="updateLang(option.value)"
+            >
+              <span class="mode-text">{{ option.label }}</span>
+            </div>
+          </div>
+        </template>
+
         <!-- 清除缓存 -->
         <template #custom-cache>
           <GlobalButtons :buttonList="buttonList.cache"></GlobalButtons>
@@ -74,6 +97,8 @@ import GlobalButtons from '@renderer/components/global-buttons/index.vue'
 import ConfigForm from './form.vue'
 import ImportDialog from './import-dialog.vue'
 import ControlDialog from './control-dialog.vue'
+import { setLang } from '@renderer/lang'
+import { ELANG_VALUE } from '@renderer/lang/type'
 const globalStore = useGlobalStore()
 const uiStore = useUIStore()
 
@@ -116,7 +141,8 @@ const handleOpenLogs = () => {
 /** 表单数据 */
 const formData = ref({
   mode: uiStore.themeMode,
-  audioMode: 'stereo'
+  audioMode: 'stereo',
+  lang: uiStore.lang
 })
 
 /** 表单分组 */
@@ -126,6 +152,12 @@ const formGroups = computed(() => [
     titleStyle: 'padding:5px',
     wrapperStyle: `background: var(--color-set-bg); padding:5px; border-radius:10px`,
     items: [{ type: 'custom', label: '模式', prop: 'mode' }]
+  },
+  {
+    title: '语言设置',
+    titleStyle: 'padding:5px',
+    wrapperStyle: `background: var(--color-set-bg); padding:5px; border-radius:10px`,
+    items: [{ type: 'custom', label: '语言', prop: 'lang' }]
   },
   {
     title: '存储管理',
@@ -242,6 +274,11 @@ const modeOptions = [
   { label: '沉浸', value: 'filter' }
 ]
 
+const langOptions = [
+  { label: '中', value: ELANG_VALUE.Zh },
+  { label: '英', value: ELANG_VALUE.En }
+]
+
 const activeIndex = computed(() =>
   modeOptions.findIndex((opt) => opt.value === formData.value.mode)
 )
@@ -249,6 +286,15 @@ const activeIndex = computed(() =>
 const updateMode = (val) => {
   formData.value.mode = val
   handleModeChange(val)
+}
+const langActiveIndex = computed(() =>
+  langOptions.findIndex((opt) => opt.value === formData.value.lang)
+)
+
+const updateLang = (val: ELANG_VALUE) => {
+  formData.value.lang = val
+  setLang(val)
+  // handleModeChange(val)
 }
 </script>
 

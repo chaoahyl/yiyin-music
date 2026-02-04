@@ -2,7 +2,8 @@
   <div class="home" ref="homeRef">
     <div class="title">
       <div style="display: flex; justify-content: space-between; width: 100%">
-        <h2 style="margin: 0">全部歌曲</h2>
+        <h2 style="margin: 0">{{ $t('views.home.title') }}</h2>
+
         <div>
           <GlobalButtons :buttonList="buttonList"></GlobalButtons>
         </div>
@@ -21,7 +22,7 @@
       ></component>
       <div v-else class="empty">
         <SvgIcon :name="'add'"></SvgIcon>
-        <div>音乐库空空如也 快去添加你的最爱曲目吧！</div>
+        <div>{{ $t('views.home.empty') }}</div>
       </div>
     </div>
   </div>

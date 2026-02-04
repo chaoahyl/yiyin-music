@@ -22,11 +22,14 @@ import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import VueVirtualScroller from 'vue-virtual-scroller'
 
 import { createPinia } from 'pinia'
+import { i18n } from './lang'
 const app = createApp(App)
 const pinia = createPinia()
 app.use(router)
 app.use(ElementPlus)
 app.use(VueVirtualScroller)
 app.use(pinia)
+app.use(i18n)
+
 app.component('svg-icon', SvgIcon)
 app.mount('#app')
