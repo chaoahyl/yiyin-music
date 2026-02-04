@@ -1,7 +1,7 @@
 <template>
   <div class="settings">
     <div class="title">
-      <h2 style="margin: 0">设置</h2>
+      <h2 style="margin: 0">{{ t('views.set.settings_title') }}</h2>
     </div>
 
     <div class="form-container">
@@ -25,11 +25,12 @@
               :class="['mode-item', { active: formData.mode === option.value }]"
               @click="updateMode(option.value)"
             >
-              <span class="mode-text">{{ option.label }}</span>
+              <span class="mode-text">{{ t(option.label) }}</span>
             </div>
           </div>
         </template>
 
+        <!-- 语言切换 -->
         <template #custom-lang>
           <div class="custom-mode-switch">
             <div
@@ -63,10 +64,12 @@
           <GlobalButtons :buttonList="buttonList.path"></GlobalButtons>
         </template>
 
+        <!-- 远程控制 -->
         <template #custom-remote>
           <GlobalButtons :buttonList="buttonList.control"></GlobalButtons>
         </template>
 
+        <!-- 系统日志 -->
         <template #custom-logs>
           <GlobalButtons :buttonList="buttonList.log"></GlobalButtons>
         </template>
@@ -77,16 +80,18 @@
     <ImportDialog v-model="uiStore.importVisible" :progress="importProgress" />
 
     <ControlDialog v-model="qrVisible" :url="remoteUrl" />
+
     <!-- 版本信息 -->
     <div class="version-info">
-      <p>版本: {{ version.version }}</p>
-      <p>开发者: {{ version.developer }}</p>
+      <p>{{ t('views.set.version') }}: {{ version.version }}</p>
+      <p>{{ t('views.set.developer') }}: {{ version.developer }}</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ElMessageBox, ElNotification } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
 import { handleRes } from '@renderer/utils/request'
 import { useGlobalStore } from '@renderer/store'
@@ -99,6 +104,8 @@ import ImportDialog from './import-dialog.vue'
 import ControlDialog from './control-dialog.vue'
 import { setLang } from '@renderer/lang'
 import { ELANG_VALUE } from '@renderer/lang/type'
+
+const { t } = useI18n()
 const globalStore = useGlobalStore()
 const uiStore = useUIStore()
 
@@ -106,80 +113,74 @@ const buttonList = computed(() => ({
   path: [
     {
       style: { padding: '0', 'border-radius': '8px' },
-      label: '设置路径',
+      label: t('views.set.set_path'),
       onClick: handlePath
     }
   ],
   cache: [
     {
       style: { padding: '0', 'border-radius': '8px', 'font-size': '8px' },
-      label: '清除缓存',
+      label: t('views.set.clear_cache'),
       onClick: clearCache
     }
   ],
   control: [
     {
       style: { padding: '0', 'border-radius': '8px' },
-      label: '远程控制',
+      label: t('views.set.remote_control'),
       onClick: handleRemote
     }
   ],
   log: [
     {
       style: { padding: '0', 'border-radius': '8px' },
-      label: '打开日志',
+      label: t('views.set.open_logs'),
       onClick: handleOpenLogs
     }
   ]
 }))
 
 /** 打开日志目录 */
-const handleOpenLogs = () => {
-  window.api.openPath()
-}
+const handleOpenLogs = () => window.api.openPath()
 
 /** 表单数据 */
-const formData = ref({
-  mode: uiStore.themeMode,
-  audioMode: 'stereo',
-  lang: uiStore.lang
-})
+const formData = ref({ mode: uiStore.themeMode, audioMode: 'stereo', lang: uiStore.lang })
 
 /** 表单分组 */
 const formGroups = computed(() => [
   {
-    title: '外观设置',
+    title: t('views.set.appearance_settings'),
     titleStyle: 'padding:5px',
     wrapperStyle: `background: var(--color-set-bg); padding:5px; border-radius:10px`,
-    items: [{ type: 'custom', label: '模式', prop: 'mode' }]
+    items: [{ type: 'custom', label: t('views.set.mode'), prop: 'mode' }]
   },
   {
-    title: '语言设置',
+    title: t('views.set.language_settings'),
     titleStyle: 'padding:5px',
     wrapperStyle: `background: var(--color-set-bg); padding:5px; border-radius:10px`,
-    items: [{ type: 'custom', label: '语言', prop: 'lang' }]
+    items: [{ type: 'custom', label: t('views.set.language'), prop: 'lang' }]
   },
   {
-    title: '存储管理',
+    title: t('views.set.storage_management'),
     titleStyle: 'padding:5px',
     wrapperStyle: `background: var(--color-set-bg); padding:5px; border-radius:10px`,
     items: [
-      { type: 'custom', label: '歌曲路径', prop: 'path' },
+      { type: 'custom', label: t('views.set.path'), prop: 'path' },
       { type: 'divider', style: `margin:5px 0; border-color: var(--color-border)` },
-      { type: 'custom', label: '缓存清理', prop: 'cache' }
+      { type: 'custom', label: t('views.set.cache_clear'), prop: 'cache' }
     ]
   },
   {
-    title: '远程服务',
+    title: t('views.set.remote_service'),
     titleStyle: 'padding:5px',
     wrapperStyle: `background: var(--color-set-bg); padding:5px; border-radius:10px`,
-    items: [{ type: 'custom', label: '远程控制', prop: 'remote' }]
+    items: [{ type: 'custom', label: t('views.set.remote_control'), prop: 'remote' }]
   },
   {
-    title: '系统日志',
+    title: t('views.set.system_logs'),
     titleStyle: 'padding:5px',
     wrapperStyle: `background: var(--color-set-bg); padding:5px; border-radius:10px`,
-    items: [{ type: 'custom', label: '运行日志', prop: 'logs' }]
+    items: [{ type: 'custom', label: t('views.set.logs'), prop: 'logs' }]
   }
 ])
 
@@ -189,24 +190,22 @@ const qrVisible = ref(false)
 const remoteUrl = ref('')
 onMounted(() => {
   window.api.getCode().then((res) => {
-    if (handleRes(res)) {
-      remoteUrl.value = res.data
-    }
+    if (handleRes(res)) remoteUrl.value = res.data
   })
 })
 
 /** 清除缓存 */
 const clearCache = () => {
-  ElMessageBox.confirm('确定要清除缓存吗?', '警告', {
-    confirmButtonText: '确认',
-    cancelButtonText: '取消',
+  ElMessageBox.confirm(t('views.set.confirm_clear_cache'), t('views.set.warning'), {
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel'),
     type: 'warning'
   })
     .then(() => {
       localStorage.clear()
       globalStore.resetAll()
       ElNotification({
-        title: '缓存清理完成，重启程序即可生效',
+        title: t('views.set.cache_cleared'),
         type: 'success',
         position: 'bottom-right'
       })
@@ -214,24 +213,12 @@ const clearCache = () => {
     .catch(() => {})
 }
 
-/** 导入进度状态 */
-const importProgress = reactive({
-  current: 0,
-  total: 0,
-  file: '',
-  percent: 10
-})
-
-const handleRemote = () => {
-  qrVisible.value = true
-}
-
-/** 设置路径 & 导入音乐 */
+/** 导入路径 */
 const handlePath = () => {
   window.api.openMusicFolder().then((res) => {
     if (res.code === 200) {
       const p = res.path
-      window.api.setMusicFolder(p).then((_ress) => {
+      window.api.setMusicFolder(p).then(() => {
         uiStore.importVisible = true
         importProgress.current = 0
         importProgress.total = 0
@@ -244,15 +231,7 @@ const handlePath = () => {
           importProgress.percent = Math.round((data.current / data.total) * 100)
         })
 
-        window.api
-          .importMusicFolder(p)
-          .then(() => {
-            localStorage.clear()
-            globalStore.resetAll()
-          })
-          .finally(() => {
-            uiStore.importVisible = false
-          })
+        window.api.importMusicFolder(p).finally(() => (uiStore.importVisible = false))
       })
     } else {
       ElNotification({ title: res.message, type: 'info', position: 'bottom-right' })
@@ -260,42 +239,41 @@ const handlePath = () => {
   })
 }
 
-/** 模式切换 */
-const handleModeChange = (mode: 'dark' | 'filter' | 'light') => {
-  uiStore.themeMode = mode
-  setTheme(mode)
-  document.documentElement.classList.remove('dark', 'filter-mode')
-  if (mode === 'dark') document.documentElement.classList.add('dark')
-  else if (mode === 'filter') document.documentElement.classList.add('filter-mode')
-}
-const modeOptions = [
-  { label: '明亮', value: 'light' },
-  { label: '深色', value: 'dark' },
-  { label: '沉浸', value: 'filter' }
-]
+/** 主题模式切换 */
+const modeOptions = computed(() => [
+  { label: t('views.set.light_mode'), value: 'light' },
+  { label: t('views.set.dark_mode'), value: 'dark' },
+  { label: t('views.set.immersive_mode'), value: 'filter' }
+])
 
-const langOptions = [
-  { label: '中', value: ELANG_VALUE.Zh },
-  { label: '英', value: ELANG_VALUE.En }
-]
+// 语言选项
+const langOptions = computed(() => [
+  { label: t('views.set.lang_zh'), value: ELANG_VALUE.Zh },
+  { label: t('views.set.lang_en'), value: ELANG_VALUE.En }
+])
 
 const activeIndex = computed(() =>
-  modeOptions.findIndex((opt) => opt.value === formData.value.mode)
+  modeOptions.value.findIndex((opt) => opt.value === formData.value.mode)
 )
-
 const updateMode = (val) => {
   formData.value.mode = val
-  handleModeChange(val)
+  setTheme(val)
+  document.documentElement.classList.remove('dark', 'filter-mode')
+  if (val === 'dark') document.documentElement.classList.add('dark')
+  else if (val === 'filter') document.documentElement.classList.add('filter-mode')
 }
-const langActiveIndex = computed(() =>
-  langOptions.findIndex((opt) => opt.value === formData.value.lang)
-)
 
+const langActiveIndex = computed(() =>
+  langOptions.value.findIndex((opt) => opt.value === formData.value.lang)
+)
 const updateLang = (val: ELANG_VALUE) => {
   formData.value.lang = val
   setLang(val)
-  // handleModeChange(val)
 }
+
+const handleRemote = () => (qrVisible.value = true)
+
+const importProgress = reactive({ current: 0, total: 0, file: '', percent: 0 })
 </script>
 
 <style scoped lang="less">

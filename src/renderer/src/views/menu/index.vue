@@ -1,11 +1,11 @@
 <template>
   <div class="home" ref="homeRef">
     <div class="title">
-      <h2 style="margin: 0">我的歌单</h2>
-      <GlobalInput :placeholder="'搜索歌单'" @search="handleSearch" />
+      <h2 style="margin: 0">{{ t('views.menu.title') }}</h2>
+      <GlobalInput :placeholder="t('views.menu.search_placeholder')" @search="handleSearch" />
     </div>
 
-    <!-- 新建歌单 -->
+    <!-- 新建/删除歌单按钮 -->
     <div class="create-menu">
       <GlobalButtons :buttonList="buttonList"></GlobalButtons>
     </div>
@@ -31,7 +31,7 @@
       </GridCard>
       <div v-else class="empty">
         <SvgIcon :name="'add'"></SvgIcon>
-        <div>歌单里还没有歌曲 快去添加你喜欢的音乐吧！</div>
+        <div>{{ t('views.menu.empty') }}</div>
       </div>
     </div>
 
@@ -41,6 +41,7 @@
 
 <script setup lang="ts">
 import { ElMessageBox } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 import defaultBg from '@renderer/assets/img/default.png'
 import SvgIcon from '@renderer/components/svg-icon/index.vue'
 import GlobalInput from '@renderer/components/global-input/index.vue'
@@ -48,18 +49,19 @@ import GridCard from '@renderer/components/grid-card/index.vue'
 import GlobalButtons from '@renderer/components/global-buttons/index.vue'
 import { TPlayList } from '@renderer/types'
 import { handleRes } from '@renderer/utils/request'
-
 import MenuDialog from './menu-dialog.vue'
+
+const { t } = useI18n()
 
 const buttonList = computed(() => [
   {
     icon: 'add',
-    label: '新建歌单',
+    label: t('views.menu.create_menu'),
     onClick: createMenu
   },
   {
     icon: 'remove',
-    label: '删除歌单',
+    label: t('views.menu.remove_menu'),
     onClick: removeMenu
   }
 ])
@@ -109,9 +111,9 @@ const handleMenu = (menu: TPlayList) => {
 }
 
 const handleRemoveMenu = (menu: TPlayList) => {
-  ElMessageBox.confirm('确定删除歌单吗？', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消'
+  ElMessageBox.confirm(t('views.menu.confirm_remove'), t('views.menu.title'), {
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel')
   })
     .then(() => {
       window.api

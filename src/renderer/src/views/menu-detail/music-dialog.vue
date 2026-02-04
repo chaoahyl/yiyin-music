@@ -3,7 +3,7 @@
     append-to-body
     v-model="dialogVisible"
     :close-on-click-modal="false"
-    title="选择歌曲"
+    :title="t('views.menuDetail.select_music')"
     width="60%"
   >
     <div style="height: 50vh">
@@ -24,7 +24,7 @@
               @change="toggleSelect(item)"
               @click.stop
             />
-            <img :src="item.cover || defaultBg" alt="封面" class="cover" />
+            <img :src="item.cover || defaultBg" alt="cover" class="cover" />
             <div class="info">
               <div class="title">{{ item.name }}</div>
               <div class="artist-album">{{ item.artist }} - {{ item.album }}</div>
@@ -36,8 +36,8 @@
     </div>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleConfirm">确定</el-button>
+        <el-button @click="dialogVisible = false">{{ t('cancel') }}</el-button>
+        <el-button type="primary" @click="handleConfirm">{{ t('confirm') }}</el-button>
       </div>
     </template>
   </el-dialog>
@@ -45,12 +45,15 @@
 
 <script lang="ts" setup>
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
 import defaultBg from '@renderer/assets/img/default.png'
 import ListCard from '@renderer/components/list-card/index.vue'
 import { formatDuration } from '@renderer/utils/music'
 import { handleRes } from '@renderer/utils/request'
 import { TSong } from '@renderer/types'
+
+const { t } = useI18n()
 
 const dialogVisible = ref(false)
 const menuName = ref('')
@@ -91,7 +94,6 @@ const getData = () => {
 }
 
 const toggleSelect = (song: any) => {
-  // 已在歌单的歌曲禁止选择
   if (songs.value.some((s) => s.url === song.url)) return
 
   const newSelected = [...selectedSongs.value]
@@ -108,7 +110,7 @@ const handleConfirm = () => {
   )
   window.api.addSong(menuName.value, musicData).then((res) => {
     if (handleRes(res)) {
-      ElMessage.success('添加成功')
+      ElMessage.success(t('views.menuDetail.add_success'))
       emits('refresh')
       dialogVisible.value = false
     }

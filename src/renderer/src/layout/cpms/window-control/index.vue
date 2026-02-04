@@ -19,7 +19,7 @@
           :name="item.meta.icon"
           :color="activeItem === item.path ? '#ffffff' : 'var(--color-text)'"
         />
-        <span class="menu-item-text">{{ item.meta.title }}</span>
+        <span class="menu-item-text">{{ $t(item.meta.title) }}</span>
       </div>
     </div>
 

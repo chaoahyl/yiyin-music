@@ -3,16 +3,20 @@
     append-to-body
     v-model="dialogVisible"
     :close-on-click-modal="false"
-    title="新建歌单"
+    :title="$t('views.menu.create_menu')"
     width="60%"
   >
     <div style="height: 20vh">
-      <el-input v-model="menuName" placeholder="输入歌单名称" @keyup.enter="handleConfirm" />
+      <el-input
+        v-model="menuName"
+        :placeholder="$t('views.menu.search_placeholder')"
+        @keyup.enter="handleConfirm"
+      />
     </div>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleConfirm">确定</el-button>
+        <el-button @click="dialogVisible = false">{{ $t('cancel') }}</el-button>
+        <el-button type="primary" @click="handleConfirm">{{ $t('confirm') }}</el-button>
       </div>
     </template>
   </el-dialog>
@@ -22,11 +26,13 @@
 import { ElMessage } from 'element-plus'
 
 import { handleRes } from '@renderer/utils/request'
+import { useI18n } from 'vue-i18n'
 
 const dialogVisible = ref(false)
 const menuName = ref('')
 const emits = defineEmits(['refresh'])
 
+const { t } = useI18n()
 const openDialog = () => {
   dialogVisible.value = true
 }
@@ -34,13 +40,13 @@ const openDialog = () => {
 const handleConfirm = () => {
   const name = menuName.value.trim()
   if (!name) {
-    ElMessage.warning('请输入歌单名称')
+    ElMessage.warning(t('enter_menu_name'))
     return
   }
   window.api.createMenu(name).then((res) => {
     if (handleRes(res)) {
       dialogVisible.value = false
-      ElMessage.success('歌单创建成功')
+      ElMessage.success(t('menu_created'))
       emits('refresh')
     }
   })

@@ -1,0 +1,40 @@
+export default {
+  control_dialog: {
+    title: 'Mobile Remote Control',
+    tips: 'Please scan the QR code above with your phone',
+    tag: 'Must be on the same local network (Wi-Fi)'
+  },
+  import_dialog: {
+    title: 'Music Library Sync',
+    analysis: 'Analyzing file structure...',
+    current: 'Processed',
+    total: 'Total'
+  },
+  settings_title: 'Settings',
+  appearance_settings: 'Appearance',
+  mode: 'Mode',
+  language_settings: 'Language Settings',
+  language: 'Language',
+  storage_management: 'Storage Management',
+  path: 'Music Path',
+  cache_clear: 'Clear Cache',
+  remote_service: 'Remote Service',
+  system_logs: 'System Logs',
+  logs: 'Running Logs',
+  light_mode: 'Light',
+  dark_mode: 'Dark',
+  immersive_mode: 'Immersive',
+  lang_zh: 'Zh',
+  lang_en: 'En',
+  set_path: 'Set Path',
+  clear_cache: 'Clear Cache',
+  remote_control: 'Remote Control',
+  open_logs: 'Open Logs',
+  confirm_clear_cache: 'Are you sure you want to clear cache?',
+  warning: 'Warning',
+  confirm: 'Confirm',
+  cancel: 'Cancel',
+  cache_cleared: 'Cache cleared. Restart the app to take effect.',
+  version: 'Version',
+  developer: 'Developer'
+}

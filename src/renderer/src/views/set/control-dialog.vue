@@ -2,7 +2,7 @@
   <el-dialog
     append-to-body
     v-model="visible"
-    title="手机远程控制"
+    :title="$t('views.set.control_dialog.title')"
     width="35%"
     :close-on-click-modal="false"
   >
@@ -18,8 +18,8 @@
         />
       </div>
       <div class="qr-info">
-        <p class="qr-tips">请使用手机扫描上方二维码</p>
-        <div class="status-tag">需处于同一局域网 (Wi-Fi)</div>
+        <p class="qr-tips">{{ $t('views.set.control_dialog.tips') }}</p>
+        <div class="status-tag">{{ $t('views.set.control_dialog.tag') }}</div>
       </div>
     </div>
   </el-dialog>

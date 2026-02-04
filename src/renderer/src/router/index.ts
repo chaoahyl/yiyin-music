@@ -17,49 +17,49 @@ const routes = [
       {
         path: 'home',
         name: 'Home',
-        meta: { title: '音乐库', icon: 'home' },
+        meta: { title: 'layout.home', icon: 'home' },
         component: () => import('@renderer/views/home/index.vue')
       },
       {
         path: 'menu',
         name: 'Menu',
-        meta: { title: '歌单', icon: 'menu' },
+        meta: { title: 'layout.menu', icon: 'menu' },
         component: () => import('@renderer/views/menu/index.vue')
       },
       {
         path: 'menu-detail/:name',
         name: 'MenuDetail',
-        meta: { title: '歌单详情', icon: 'home', hidden: true },
+        meta: { title: 'layout.menu_detail', icon: 'home', hidden: true },
         component: () => import('@renderer/views/menu-detail/index.vue')
       },
       {
         path: 'artist',
         name: 'Artist',
-        meta: { title: '艺术家', icon: 'artist' },
+        meta: { title: 'layout.artist', icon: 'artist' },
         component: () => import('@renderer/views/artist/index.vue')
       },
       {
         path: 'artist-detail/:name/:cover',
         name: 'ArtistDetail',
-        meta: { title: '艺术家详情', icon: 'artist', hidden: true },
+        meta: { title: 'layout.artist_detail', icon: 'artist', hidden: true },
         component: () => import('@renderer/views/artist/detail.vue')
       },
       {
         path: 'album/:artist/:name',
         name: 'Album',
-        meta: { title: '专辑', icon: 'artist', hidden: true },
+        meta: { title: 'layout.album', icon: 'artist', hidden: true },
         component: () => import('@renderer/views/artist/album.vue')
       },
       {
         path: 'love',
         name: 'Love',
-        meta: { title: '收藏', icon: 'loveside' },
+        meta: { title: 'layout.love', icon: 'loveside' },
         component: () => import('@renderer/views/love/index.vue')
       },
       {
         path: 'set',
         name: 'Set',
-        meta: { title: '设置', icon: 'set', hidden: true },
+        meta: { title: 'layout.set', icon: 'set', hidden: true },
         component: () => import('@renderer/views/set/index.vue')
       }
     ]

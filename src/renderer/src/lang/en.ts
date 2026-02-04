@@ -1,9 +1,11 @@
 import views from './views/en'
-import layouts from './layout/en'
+import layout from './layout/en'
 export default {
   download: 'Download',
   loading: 'Loading',
   clear: 'Clear',
+  confirm: 'Confirm',
+  cancel: 'Cancel',
   ...views,
-  ...layouts
+  ...layout
 }

@@ -37,18 +37,20 @@ import GlobalButtons from '@renderer/components/global-buttons/index.vue'
 import { handleRes } from '@renderer/utils/request'
 import { useGlobalStore } from '@renderer/store'
 import { TSong } from '@renderer/types'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const mode = ref<'grid' | 'list'>((localStorage.getItem('homeView') as any) || 'list')
 
 const buttonList = computed(() => [
   {
     icon: mode.value === 'grid' ? 'list' : 'grid',
-    label: mode.value === 'grid' ? '列表模式' : '网格模式',
+    label: mode.value === 'grid' ? t('views.home.grid_mode') : t('views.home.list_mode'),
     onClick: toggleMode
   },
   {
     icon: 'location',
-    label: '定位',
+    label: t('views.home.location'),
     onClick: handleLocation
   }
 ])

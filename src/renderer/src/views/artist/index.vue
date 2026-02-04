@@ -1,8 +1,8 @@
 <template>
   <div class="home" ref="homeRef">
     <div class="title">
-      <h2 style="margin: 0">艺术家</h2>
-      <GlobalInput :placeholder="'搜索艺术家'" @search="handleSearch" />
+      <h2 style="margin: 0">{{ t('views.artist.artist_title') }}</h2>
+      <GlobalInput :placeholder="t('views.artist.search_artist')" @search="handleSearch" />
     </div>
 
     <div class="cards" ref="cardsRef">
@@ -16,19 +16,22 @@
       </GridCard>
       <div v-else class="empty">
         <SvgIcon :name="'add'"></SvgIcon>
-        <div>暂无艺术家信息 快去添加你喜欢的艺术家吧！</div>
+        <div>{{ t('views.artist.artist_empty') }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import defaultBg from '@renderer/assets/img/default.png'
 import SvgIcon from '@renderer/components/svg-icon/index.vue'
 import GlobalInput from '@renderer/components/global-input/index.vue'
 import GridCard from '@renderer/components/grid-card/index.vue'
 import { TArt } from '@renderer/types'
 import { handleRes } from '@renderer/utils/request'
+
+const { t } = useI18n()
 
 const artList = ref<TArt[]>([])
 const loading = ref(false)
@@ -50,10 +53,8 @@ const getData = () => {
 
 const handleSearch = (val: string) => {
   if (val) {
-    artList.value = artList.value.filter((item) => {
-      const key = val.trim().toLowerCase()
-      return item.artist?.toLowerCase().includes(key)
-    })
+    const key = val.trim().toLowerCase()
+    artList.value = artList.value.filter((item) => item.artist?.toLowerCase().includes(key))
   } else {
     getData()
   }

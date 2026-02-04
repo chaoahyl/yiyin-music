@@ -13,7 +13,7 @@
         @togglePlay="togglePlay"
         @toggleRandom="toggleRandom"
       />
-      <GlobalInput @search="handleSearch" />
+      <GlobalInput :placeholder="t('views.menuDetail.search_placeholder')" @search="handleSearch" />
     </div>
 
     <div class="cards" ref="cardsRef">
@@ -27,15 +27,17 @@
       />
       <div v-else class="empty">
         <SvgIcon :name="'add'"></SvgIcon>
-        <div>歌单里还没有歌曲 快去添加你喜欢的音乐吧！</div>
+        <div>{{ t('views.menuDetail.empty') }}</div>
       </div>
     </div>
+
     <MusicDialog ref="musicDialogRef" @refresh="getData" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ElNotification } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
 import GlobalInput from '@renderer/components/global-input/index.vue'
 import SvgIcon from '@renderer/components/svg-icon/index.vue'
@@ -47,6 +49,8 @@ import { TSong } from '@renderer/types'
 
 import MusicDialog from './music-dialog.vue'
 
+const { t } = useI18n()
+
 const songs = ref<TSong[]>([])
 const loading = ref(false)
 const route = useRoute()
@@ -56,25 +60,24 @@ const globalStore = useGlobalStore()
 
 const handleSearch = (val: string) => {
   if (val) {
-    songs.value = songs.value.filter((item) => {
-      const key = val.trim().toLowerCase()
-      return (
+    const key = val.trim().toLowerCase()
+    songs.value = songs.value.filter(
+      (item) =>
         item.name?.toLowerCase().includes(key) ||
         item.artist?.toLowerCase().includes(key) ||
         item.album?.toLowerCase().includes(key)
-      )
-    })
+    )
   } else {
     getData()
   }
 }
 
 const isSelect = ref(false)
-
 const selectedMusic = ref<TSong[]>([])
 const handleSelect = (music: TSong[]) => {
   selectedMusic.value = music
 }
+
 const getData = () => {
   loading.value = true
   window.api
@@ -89,9 +92,11 @@ const getData = () => {
       loading.value = false
     })
 }
+
 const handlePlay = (music: TSong) => {
   globalStore.setSong(music, songs.value)
 }
+
 onMounted(() => {
   menuName.value = route.params.name as string
   getData()
@@ -102,7 +107,11 @@ const togglePlay = () => {
     globalStore.setPlayMode('sequence')
     globalStore.setSong(songs.value[0], songs.value)
   } else {
-    ElNotification({ title: '歌单为空', type: 'warning', position: 'bottom-right' })
+    ElNotification({
+      title: t('views.menuDetail.playlist_empty'),
+      type: 'warning',
+      position: 'bottom-right'
+    })
   }
 }
 
@@ -112,9 +121,14 @@ const toggleRandom = () => {
     const randomIndex = Math.floor(Math.random() * songs.value.length)
     globalStore.setSong(songs.value[randomIndex], songs.value)
   } else {
-    ElNotification({ title: '歌单为空', type: 'warning', position: 'bottom-right' })
+    ElNotification({
+      title: t('views.menuDetail.playlist_empty'),
+      type: 'warning',
+      position: 'bottom-right'
+    })
   }
 }
+
 const musicDialogRef = ref()
 const addMusic = () => {
   musicDialogRef.value?.openDialog(menuName.value)
@@ -142,6 +156,7 @@ const removeMusic = () => {
   align-items: center;
   box-sizing: border-box;
   gap: 20px;
+
   .title {
     width: 100%;
     display: flex;
@@ -150,6 +165,7 @@ const removeMusic = () => {
     align-items: center;
     gap: 20px;
   }
+
   .cards {
     flex: 1;
     width: 100%;

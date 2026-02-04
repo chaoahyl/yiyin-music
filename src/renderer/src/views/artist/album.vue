@@ -5,7 +5,7 @@
         ref="musicHeaderRef"
         :cover="musicList[0]?.cover"
         :songsNum="musicList?.length"
-        :title="albName || '全部歌曲'"
+        :title="albName || $t('views.artist.all_songs')"
         @togglePlay="togglePlay"
         @toggleRandom="toggleRandom"
       />

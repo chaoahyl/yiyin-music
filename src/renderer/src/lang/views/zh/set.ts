@@ -1,0 +1,40 @@
+export default {
+  control_dialog: {
+    title: '手机远程控制',
+    tips: '请使用手机扫描上方二维码',
+    tag: '需处于同一局域网 (Wi-Fi)'
+  },
+  import_dialog: {
+    title: '曲库同步',
+    analysis: '正在分析文件结构...',
+    current: '已处理',
+    total: '总计'
+  },
+  settings_title: '设置',
+  appearance_settings: '外观设置',
+  mode: '模式',
+  language_settings: '语言设置',
+  language: '语言',
+  storage_management: '存储管理',
+  path: '歌曲路径',
+  cache_clear: '缓存清理',
+  remote_service: '远程服务',
+  system_logs: '系统日志',
+  logs: '运行日志',
+  light_mode: '明亮',
+  dark_mode: '深色',
+  immersive_mode: '沉浸',
+  lang_zh: '中',
+  lang_en: '英',
+  set_path: '设置路径',
+  clear_cache: '清除缓存',
+  remote_control: '远程控制',
+  open_logs: '打开日志',
+  confirm_clear_cache: '确定要清除缓存吗?',
+  warning: '警告',
+  confirm: '确认',
+  cancel: '取消',
+  cache_cleared: '缓存清理完成，重启程序即可生效',
+  version: '版本',
+  developer: '开发者'
+}

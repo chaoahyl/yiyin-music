@@ -7,7 +7,7 @@
         @toggle-play="togglePlay"
         @handle-mode="toggleMode"
       />
-      <GlobalInput :placeholder="'搜索专辑'" @search="handleSearch" />
+      <GlobalInput :placeholder="$t('views.artist.detail_placeholder')" @search="handleSearch" />
     </div>
 
     <div class="cards" ref="cardsRef">

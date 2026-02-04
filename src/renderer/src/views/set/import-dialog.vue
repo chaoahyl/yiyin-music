@@ -2,7 +2,7 @@
   <el-dialog
     v-model="visible"
     append-to-body
-    title="曲库同步"
+    :title="$t('views.set.import_dialog.title')"
     width="400px"
     :show-close="false"
     :close-on-click-modal="false"
@@ -48,18 +48,20 @@
       <div class="details-panel">
         <div class="file-info-row">
           <div class="pulsing-dot"></div>
-          <span class="file-name">{{ progress.file || '正在分析文件结构...' }}</span>
+          <span class="file-name">{{
+            progress.file || $t('views.set.import_dialog.analysis')
+          }}</span>
         </div>
 
         <div class="stats-row">
           <div class="stat-item">
             <span class="label">已处理</span>
-            <span class="val">{{ progress.current }}</span>
+            <span class="val">{{ $t('views.set.import_dialog.current') }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
             <span class="label">总计</span>
-            <span class="val">{{ progress.total }}</span>
+            <span class="val">{{ $t('views.set.import_dialog.total') }}</span>
           </div>
         </div>
       </div>

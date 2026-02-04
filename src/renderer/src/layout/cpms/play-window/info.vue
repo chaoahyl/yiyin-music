@@ -12,7 +12,7 @@
       <div class="info">
         <Transition name="fade-slide" mode="out-in">
           <div :key="globalStore.playMusic?.url" class="title" :title="globalStore.playMusic?.name">
-            {{ globalStore.playMusic?.name || '未播放' }}
+            {{ globalStore.playMusic?.name || '--' }}
           </div>
         </Transition>
 
@@ -104,7 +104,7 @@ const uiStore = useUIStore()
 const emits = defineEmits(['openUpdate'])
 
 const openUpdate = () => {
-  emits('openUpdate')
+  // emits('openUpdate')
 }
 
 const isLoved = computed(() => {
