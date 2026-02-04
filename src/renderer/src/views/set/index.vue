@@ -25,7 +25,7 @@
               :class="['mode-item', { active: formData.mode === option.value }]"
               @click="updateMode(option.value)"
             >
-              <span class="mode-text">{{ t(option.label) }}</span>
+              <span class="mode-text">{{ option.label }}</span>
             </div>
           </div>
         </template>
