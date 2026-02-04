@@ -7,8 +7,8 @@
     <div class="info">
       <div class="text-wrap">
         <div class="title">{{ props.artDetail.artName }}</div>
-        <div class="sub-title">专辑数量 {{ props.artDetail.albumsNum }}</div>
-        <div class="sub-title">歌曲数量 {{ props.artDetail.songsNum }}</div>
+        <div class="sub-title">{{ t('layout.btn.album_num') }} {{ props.artDetail.albumsNum }}</div>
+        <div class="sub-title">{{ t('layout.btn.song_num') }} {{ props.artDetail.songsNum }}</div>
         <GlobalButtons :buttonList="buttonList"></GlobalButtons>
       </div>
     </div>
@@ -18,7 +18,9 @@
 <script setup lang="ts">
 import defaultImg from '@renderer/assets/img/default.png'
 import GlobalButtons from '@renderer/components/global-buttons/index.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps({
   artDetail: {
     type: Object,
@@ -35,12 +37,12 @@ const props = defineProps({
 const buttonList = computed(() => [
   {
     icon: 'loop',
-    label: '专辑/歌曲',
+    label: t('layout.btn.loop'),
     onClick: handleMode
   },
   {
     icon: 'play',
-    label: '播放全部',
+    label: t('layout.btn.play'),
     onClick: togglePlay,
     show: props.artDetail.mode === 'list'
   }

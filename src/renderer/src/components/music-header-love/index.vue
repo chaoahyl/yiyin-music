@@ -7,7 +7,7 @@
     <div class="info">
       <div class="text-wrap">
         <div class="title">{{ props.title }}</div>
-        <div class="sub-title">歌曲数量 {{ props.songsNum }}</div>
+        <div class="sub-title">{{ t('layout.btn.song_num') }} {{ props.songsNum }}</div>
         <GlobalButtons :buttonList="buttonList"></GlobalButtons>
       </div>
     </div>
@@ -17,9 +17,11 @@
 <script setup lang="ts">
 import defaultImg from '@renderer/assets/img/default.png'
 import GlobalButtons from '@renderer/components/global-buttons/index.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps({
-  title: { type: String, default: '本地音乐' },
+  title: { type: String, default: '--' },
   cover: { type: String, default: '' },
   isMenu: { type: Boolean, default: false },
   songsNum: { type: Number, default: 0 },
@@ -30,24 +32,24 @@ const emits = defineEmits(['togglePlay', 'toggleRandom', 'addMusic', 'removeMusi
 const buttonList = computed(() => [
   {
     icon: 'play',
-    label: '播放',
+    label: t('layout.btn.play'),
     onClick: togglePlay
   },
   {
     icon: 'random',
-    label: '随机播放',
+    label: t('layout.btn.random'),
     onClick: toggleRandom
   },
   ...(props.isMenu
     ? [
         {
           icon: 'add',
-          label: '添加歌曲',
+          label: t('layout.btn.add_song'),
           onClick: addMusic
         },
         {
           icon: 'random',
-          label: '移除歌曲',
+          label: t('layout.btn.remove_song'),
           onClick: removeMusic
         }
       ]

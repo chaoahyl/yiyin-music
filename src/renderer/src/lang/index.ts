@@ -1,6 +1,6 @@
 import { createI18n } from 'vue-i18n'
 import zh from './zh'
-import en from './en'
+import en_US from './en'
 import { useUIStore } from '@renderer/store/ui'
 import { ELANG_VALUE, TElangs } from './type'
 
@@ -32,6 +32,6 @@ export const i18n = createI18n({
   locale: getLang(), // 设置默认语言
   messages: {
     [ELANG_VALUE.Zh]: zh,
-    [ELANG_VALUE.En]: en
+    [ELANG_VALUE.En]: en_US
   }
 })

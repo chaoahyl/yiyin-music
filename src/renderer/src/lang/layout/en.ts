@@ -7,6 +7,15 @@ export default {
     artist_detail: 'Artist Detail',
     album: 'Album',
     love: 'Favorites',
-    set: 'Settings'
+    set: 'Settings',
+    btn: {
+      play: 'Play',
+      random: 'Shuffle Play',
+      add_song: 'Add Song',
+      remove_song: 'Remove Song',
+      loop: 'Album/Song',
+      song_num: 'Song Num',
+      album_num: 'Album Num'
+    }
   }
 }
