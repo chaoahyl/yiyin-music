@@ -154,11 +154,6 @@ MIT License
 © 2026 依音（Yiyin Music）
 ```
 
-## License
-
-MIT License
-
-
 ## 免责声明
 
 - 本软件完全免费，供本地音乐播放使用。
