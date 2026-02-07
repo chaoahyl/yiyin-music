@@ -1,15 +1,20 @@
 # 依音（Yiyin Music）
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Electron](https://img.shields.io/badge/Electron-v25.0.0-blue)
+<p align="center">
+  <img src="./resources/icon.png" width="180">
+</p>
 
-> **依音** —— 专注本地音乐的跨平台播放器  
-> 无广告、无评论、无推荐算法干扰，基于 **Electron + Vue 3 + TypeScript** 构建。
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue" />
+  <img src="https://img.shields.io/badge/license-MIT-green" />
+  <img src="https://img.shields.io/badge/Electron-v25.0.0-blue" />
+</p>
 
-## ⭐ **如果这个项目对你有帮助，欢迎 Star 支持一下，这是对作者最大的鼓励！**
+> **依音（Yiyin Music）** —— 专注本地音乐的跨平台播放器  
+> 无广告、无评论、无推荐算法干扰  
+> 基于 **Electron + Vue 3 + TypeScript** 构建
 
----
+## ⭐ 如果这个项目对你有帮助，欢迎 Star 支持一下，这是对作者最大的鼓励！
 
 ## 📸 应用截图
 
@@ -148,6 +153,11 @@ npm run build:linux
 MIT License
 © 2026 依音（Yiyin Music）
 ```
+
+## License
+
+MIT License
+
 
 ## 免责声明
 
