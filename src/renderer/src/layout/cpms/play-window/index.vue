@@ -2,7 +2,7 @@
   <el-drawer v-model="uiStore.playWindow" direction="btt" size="100%" :with-header="false">
     <div class="player-container">
       <!-- 流体背景组件 -->
-      <FluidBackground :colors="bgColors" />
+      <FluidBackground v-show="uiStore.playWindow" :colors="bgColors" />
 
       <!-- 上方悬浮按钮 -->
       <div class="top-controls">
@@ -82,9 +82,14 @@ const bgColors = ref({
   c3: { r: 100, g: 100, b: 100 } // Muted 背景层
 })
 
+const colorCache = new Map<string, typeof bgColors.value>()
 // 颜色提取函数：提取所有可用颜色
 async function extractAndSetColors(coverUrl?: string) {
   if (!coverUrl) return
+  if (colorCache.has(coverUrl)) {
+    bgColors.value = colorCache.get(coverUrl)!
+    return
+  }
 
   try {
     const palette = await Vibrant.from(coverUrl).getPalette()
@@ -105,6 +110,11 @@ async function extractAndSetColors(coverUrl?: string) {
         c2: { r: r2, g: g2, b: b2 },
         c3: { r: r3, g: g3, b: b3 }
       }
+      colorCache.set(coverUrl, {
+        c1: { r: r1, g: g1, b: b1 },
+        c2: { r: r2, g: g2, b: b2 },
+        c3: { r: r3, g: g3, b: b3 }
+      })
     } else {
       // fallback
       bgColors.value = {
@@ -112,6 +122,12 @@ async function extractAndSetColors(coverUrl?: string) {
         c2: { r: 200, g: 80, b: 120 },
         c3: { r: 100, g: 100, b: 100 }
       }
+
+      colorCache.set(coverUrl, {
+        c1: { r: 255, g: 130, b: 150 },
+        c2: { r: 200, g: 80, b: 120 },
+        c3: { r: 100, g: 100, b: 100 }
+      })
     }
   } catch (error) {
     console.error('Color extraction failed:', error)
